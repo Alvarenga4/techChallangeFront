@@ -12,6 +12,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   width: 100%;
   height: 100%;
+  background-color: #ECEDF1;
 }
 
 html {
@@ -26,7 +27,7 @@ code {
 
 .slider {
   position: relative;
-  height: 76.5vh;
+  height: 81.5vh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -34,7 +35,7 @@ code {
 }
 
 .image {
-  width: 100vw;
+  width: 80vw;
   height: 600px;
   border-radius: 10px;
 }
@@ -44,7 +45,7 @@ code {
   top: 50%;
   right: 32px;
   font-size: 3rem;
-  color: #000;
+  color: #a1a1a1;
   z-index: 10;
   cursor: pointer;
   user-select: none;
@@ -55,8 +56,19 @@ code {
   top: 50%;
   left: 32px;
   font-size: 3rem;
-  color: #000;
+  color: #a1a1a1;
   z-index: 10;
   cursor: pointer;
   user-select: none;
+}
+
+.slide {
+  opacity: 0;
+  transition-duration: 1s ease;
+}
+
+.slide.active {
+  opacity: 1;
+  transition-duration: 1s;
+  transform: scale(1.08);
 }
