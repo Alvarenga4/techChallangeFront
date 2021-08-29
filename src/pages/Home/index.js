@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import {
   Row,
   Col,
@@ -13,7 +14,6 @@ import {
   CardLabelHeading,
   CardKmInfo,
   CardButton,
-  
 } from "./styled";
 
 import api from '../../services/api';
@@ -21,6 +21,7 @@ import api from '../../services/api';
 export default function Home() {
   const [annuncements, setAnnuncements] = useState([]);
   const [annuncementCount, setAnnuncementCount] = useState('');
+  const history = useHistory();
 
   useEffect(() => {
     getAnnuncements()
@@ -37,6 +38,10 @@ export default function Home() {
       console.log(e);
     }
   }
+
+ function goToSimuation(annoucementId) {
+   history.push(`/simulation/${annoucementId}`)
+ }
 
   return (
     <>
@@ -63,7 +68,7 @@ export default function Home() {
           </CardInfo>
 
           <CardFieldset>
-            <CardButton type="button">Fazer uma simulação</CardButton>
+            <CardButton onClick={() => goToSimuation(annuncement.id)} type="button">Fazer uma simulação</CardButton>
           </CardFieldset>
         </CardBody>
       </CardWrapper>

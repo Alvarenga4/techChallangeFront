@@ -9,6 +9,7 @@ import {
 import Header from './components/Header'
 
 import Home from './pages/Home'
+import Simulation from './pages/Simulation'
 
 export default function App() {
   return (
@@ -16,8 +17,11 @@ export default function App() {
       <Router>
         <Header />
         <Switch>
-          <Route path="/">
+          <Route path="/" exact>
             <Home />
+          </Route>
+          <Route path="/simulation/:id" >
+            <Simulation />
           </Route>
         </Switch>
       </Router>
