@@ -17,12 +17,8 @@ export default function App() {
       <Router>
         <Header />
         <Switch>
-          <Route path="/" exact>
-            <Home />
-          </Route>
-          <Route path="/simulation/:id" >
-            <Simulation />
-          </Route>
+          <Route path="/" exact component={Home} />
+          <Route path="/simulation/:id" component={Simulation} />
         </Switch>
       </Router>
     </>

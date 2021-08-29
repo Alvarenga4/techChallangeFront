@@ -1,20 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import Grid from '@material-ui/core/Grid';
+import ImageSlider from '../../components/ImageSlider';
+import { SliderData } from '../../components/ImageSlider/SliderData';
 import {
-  Row,
-  Col,
-  CardWrapper,
-  CardHeader,
-  CardPrice,
-  CardInfo,
-  CardImageHeader,
-  CardHeading,
+  Container,
+  Card,
+  CardTitle,
+  CardDescription,
   CardBody,
-  CardFieldset,
-  CardLabelHeading,
-  CardKmInfo,
+  CardBodyTitle,
   CardButton,
-} from "./styled";
+} from "./styles";
 
 import api from '../../services/api';
 
@@ -45,34 +42,44 @@ export default function Home() {
 
   return (
     <>
-    {annuncements.map(annuncement => (
-      <CardWrapper key={annuncement.id}>
-        <CardHeader>
-          <CardImageHeader src="https://i.stack.imgur.com/6M513.png" />
-          <CardHeading>{annuncement.brand.name} {annuncement.model.name}</CardHeading>
-          <CardLabelHeading>{annuncement.version.name}</CardLabelHeading>
-        </CardHeader>
+    <Container mt={120}>
+      <Grid container spacing={8}>
+        {annuncements.map(annuncement => (
+          <Grid item md={3} xs={12} sm={12}>
+            <Card height={55} width={100} key={annuncement.id}>
+              <ImageSlider width={100} height={200} slides={SliderData} />
+              <CardBody>
+                <CardTitle size={16}>
+                  {annuncement.brand.name}
+                  <CardTitle ml={5} size={16} color={'#273479'}>{annuncement.model.name}</CardTitle>
+                </CardTitle>
+              </CardBody>
+              <CardDescription>{annuncement.version.name}</CardDescription>
+              <CardBody>
 
-        <CardBody>
-    
-          <CardInfo>
-            <CardPrice>R$ {annuncement.sale_value}</CardPrice>
-            <Row>
-              <Col>
-                <CardKmInfo>Km: {annuncement.km}</CardKmInfo>
-              </Col>
-              <Col>
-                <CardKmInfo>Km: {annuncement.km}</CardKmInfo>
-              </Col>
-            </Row>
-          </CardInfo>
-
-          <CardFieldset>
-            <CardButton onClick={() => goToSimuation(annuncement.id)} type="button">Fazer uma simulação</CardButton>
-          </CardFieldset>
-        </CardBody>
-      </CardWrapper>
-    ))}
+                <CardBodyTitle color={'#000'} size={18}>
+                  R$ {annuncement.sale_value} 
+                </CardBodyTitle> 
+                <Grid container spacing={10}>
+                  <Grid item sm={12} md={6} xs={12}>
+                    <CardDescription>Km: {annuncement.km}</CardDescription>
+                  </Grid>
+                  <Grid item sm={12} md={6} xs={12}>
+                    <CardDescription>Km: {annuncement.km}</CardDescription>
+                  </Grid>
+                    
+                </Grid>
+                <CardBody>
+                  <CardButton mt={20} onClick={() => goToSimuation(annuncement.id)} variant="contained" color="primary">
+                    Mais detalhes
+                  </CardButton>
+                </CardBody>
+              </CardBody>
+            </Card>
+          </Grid>
+        ))}
+      </Grid>
+    </Container>
     </>
   )
 }

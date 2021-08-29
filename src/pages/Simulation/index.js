@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
 import { makeStyles } from '@material-ui/core/styles';
 import ImageSlider from '../../components/ImageSlider';
-import { SliderData } from '../../components/SliderData';
+import { SliderData } from '../../components/ImageSlider/SliderData';
 import {
   Card,
   CardTitle,
@@ -30,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 }));
-export default function Simulation() {
+export default function Simulation(props) {
   const [annuncement, setAnnuncements] = useState(null);
   const [email, setEmail] = useState('');
   const [cpf, setCpf] = useState('');
@@ -47,8 +46,7 @@ export default function Simulation() {
 
   async function getAnnuncement() {
     try {
-      const {data} = await api.get('/annoucement/1');
-      console.log(data)
+      const {data} = await api.get(`/annoucement/${props.match.params.id}`);
       setAnnuncements(data);
     } catch(e) {
       console.log(e);
@@ -68,7 +66,7 @@ export default function Simulation() {
             <Card width={90}>
               <CardTitle color={'#000'}>
                 {annuncement ? annuncement.brand?.name : 'Não informado'}
-                <CardTitle color={'#273479'}>
+                <CardTitle ml={5} color={'#273479'}>
                 {annuncement ? annuncement.model?.name : 'Não informado'}
                 </CardTitle>
               </CardTitle>

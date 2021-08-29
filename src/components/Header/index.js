@@ -3,7 +3,7 @@ import './navbar.css';
 import Logo from '../../assets/logo2Tony.png';
 const Navbar=() => {
   return (
-    <header className="navbar">
+    <nav className="navbar">
 
         <div className="logo">
             <img src={Logo} />
@@ -12,7 +12,7 @@ const Navbar=() => {
             {/* your navigation */}
         </nav>
 
-    </header>
+    </nav>
   )
 };
 export default Navbar;
