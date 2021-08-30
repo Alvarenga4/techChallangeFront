@@ -6,7 +6,7 @@ import {
   Slider
 } from './styles'
 
-function ImagesSlider({ slides, width, height }) {
+function ImagesSlider({ slides, width, height, mt }) {
   const [current, setCurrent] = useState(0);
   const length = slides.length;
 
@@ -23,7 +23,7 @@ function ImagesSlider({ slides, width, height }) {
   }
 
   return (
-    <Slider>
+    <Slider mt={mt}>
       <FaArrowAltCircleLeft className="left-arrow" onClick={prevSlide} />
       <FaArrowCircleRight className="right-arrow" onClick={nextSlide} />
       {slides.map((slide, index) => {

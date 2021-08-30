@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
+
+import { formatNumber } from '../../utils/formatNumber';
 import ImageSlider from '../../components/ImageSlider';
 import { SliderData } from '../../components/ImageSlider/SliderData';
 import {
@@ -58,14 +60,14 @@ export default function Home() {
               <CardBody>
 
                 <CardBodyTitle color={'#000'} size={18}>
-                  R$ {annuncement.sale_value} 
+                  {formatNumber(annuncement.sale_value)} 
                 </CardBodyTitle> 
                 <Grid container spacing={10}>
                   <Grid item sm={12} md={6} xs={12}>
-                    <CardDescription>Km: {annuncement.km}</CardDescription>
+                    <CardDescription color={'#000'}>Km: {annuncement.km}</CardDescription>
                   </Grid>
                   <Grid item sm={12} md={6} xs={12}>
-                    <CardDescription>Km: {annuncement.km}</CardDescription>
+                    <CardDescription color={'#000'} >Cor: {annuncement.color.name}</CardDescription>
                   </Grid>
                     
                 </Grid>

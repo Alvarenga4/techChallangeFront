@@ -2,6 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
+import ReactLoading from 'react-loading';
+
+import { formatNumber } from '../../utils/formatNumber';
 import ImageSlider from '../../components/ImageSlider';
 import { SliderData } from '../../components/ImageSlider/SliderData';
 import {
@@ -37,6 +40,7 @@ export default function Simulation(props) {
   const [birthday, setBirthday] = useState('');
   const [state, setState] = useState('');
   const [tellphone, setTellphone] = useState('');
+  const [loading, setLoading] = useState(false)
   const history = useHistory();
   const classes = useStyles();
 
@@ -53,17 +57,47 @@ export default function Simulation(props) {
     }
   }
 
+  async function makeSimulation() {
+    try {
+      setLoading(true)
+      const { data } = await api.post(`/simulation/`, {
+        email,
+        cpf,
+        name,
+        birthday,
+        tellphone,
+        state
+      }, {
+        headers: {
+          annoucement_id: props.match.params.id
+        }
+      });
+
+
+      if (data.condition.approved) {
+        setLoading(false)
+        history.push(`/success/${data.simulation.id}`)
+      } else {
+        setLoading(false)
+        history.push(`/failed`)
+      }
+    } catch(e) {
+      console.log(e.response);
+      setLoading(false)
+    }
+  }
+
  function goToHome() {
    history.push(`/`)
  }
 
   return (
     <>
-      <ImageSlider slides={SliderData} />
+      <ImageSlider mt={75} slides={SliderData} />
       <Container>
         <Grid container spacing={0}>
           <Grid item md={8} xs={12} sm={12}>
-            <Card width={90}>
+            <Card height={50} width={90}>
               <CardTitle color={'#000'}>
                 {annuncement ? annuncement.brand?.name : 'Não informado'}
                 <CardTitle ml={5} color={'#273479'}>
@@ -162,10 +196,10 @@ export default function Simulation(props) {
             </Card>
           </Grid>
           <Grid item xs={12} md={4} sm={12}>
-            <Card mt={80} height={60} width={90}>
+            <Card mt={80} height={80} width={90}>
               <CardBody>
                 <CardTitle size={36}>
-                  R$ {annuncement ? annuncement.sale_value : 'Não informado'}
+                  {annuncement ? formatNumber(annuncement.sale_value) : 'Não informado'}
                 </CardTitle>
                 <CardDescription mt={20} size={16} color={'#a1a1a1'}>
                   Faça sua analíse de financiamento
@@ -198,9 +232,15 @@ export default function Simulation(props) {
                   value={birthday}
                   onChange={(e) => setBirthday(e.target.value)}
                 />
-                <CardButton mt={20} variant="contained" color="primary">
-                  Realizar simulação
-                </CardButton>
+                <CardBody>
+                  {loading ? (
+                  <ReactLoading type="bars" color={'#273479'} height={100} width={100} />
+                  ) : (
+                    <CardButton onClick={makeSimulation} mt={20} variant="contained" color="primary">
+                      Realizar simulação
+                    </CardButton>
+                  )}
+                </CardBody>
               </CardBody>
             </Card>
           </Grid>

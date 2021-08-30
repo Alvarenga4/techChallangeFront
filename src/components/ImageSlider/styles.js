@@ -5,6 +5,7 @@ export const Slider = styled.section`
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-top: ${props => props.mt ? `${props.mt}px` : '0'};
   top: 0;
 `;
 
